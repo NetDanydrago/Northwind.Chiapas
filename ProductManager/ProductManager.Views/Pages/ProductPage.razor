@@ -1,0 +1,314 @@
+@page "/products"
+
+<div class="min-h-screen bg-gradient-to-br from-orange-100 via-pink-100 to-purple-100 p-2 sm:p-4 md:p-6">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header con tema Día de Muertos -->
+        <div class="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 rounded-t-xl sm:rounded-t-2xl shadow-xl p-4 sm:p-6 border-2 sm:border-4 border-yellow-400">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0">
+                <div class="flex-1">
+                    <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1 sm:mb-2">💀 Productos del Día de Muertos 🌺</h1>
+                    <p class="text-yellow-200 text-sm sm:text-base md:text-lg">¡Viva la vida y los productos!</p>
+                </div>
+                <button class="w-full sm:w-auto bg-yellow-400 hover:bg-yellow-500 text-purple-900 font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 border-2 border-orange-600 text-sm sm:text-base" 
+                        @onclick="OpenCreateModal">
+                    🌼 Nuevo producto
+                </button>
+            </div>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="bg-white rounded-b-xl sm:rounded-b-2xl shadow-xl p-3 sm:p-6 md:p-8 border-2 sm:border-4 border-yellow-400 border-t-0">
+            @if(ViewModel.Products == null)
+            {
+                <div class="flex items-center justify-center py-8 sm:py-12">
+                    <div class="text-center">
+                        <div class="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4 animate-bounce">💀</div>
+                        <p class="text-xl sm:text-2xl text-purple-600 font-bold">Cargando las ofrendas...</p>
+                    </div>
+                </div>
+            }
+            else if (ViewModel.Products.Count == 0)
+            {
+                <div class="text-center py-8 sm:py-12">
+                    <div class="text-6xl sm:text-7xl md:text-8xl mb-3 sm:mb-4">🕯️</div>
+                    <p class="text-xl sm:text-2xl text-orange-600 font-bold">No hay productos en el altar</p>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">¡Crea la primera ofrenda!</p>
+                </div>
+            }
+            else
+            {
+                <!-- Vista de tabla en desktop -->
+                <div class="hidden lg:block overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gradient-to-r from-purple-600 to-pink-600 text-white">
+                                <th class="px-4 lg:px-6 py-3 lg:py-4 text-left text-base lg:text-lg font-bold border-r-2 border-yellow-400">💀 Id</th>
+                                <th class="px-4 lg:px-6 py-3 lg:py-4 text-left text-base lg:text-lg font-bold border-r-2 border-yellow-400">🌺 Nombre</th>
+                                <th class="px-4 lg:px-6 py-3 lg:py-4 text-left text-base lg:text-lg font-bold border-r-2 border-yellow-400">📿 Descripción</th>
+                                <th class="px-4 lg:px-6 py-3 lg:py-4 text-left text-base lg:text-lg font-bold border-r-2 border-yellow-400">🏷️ Categoría</th>
+                                <th class="px-4 lg:px-6 py-3 lg:py-4 text-right text-base lg:text-lg font-bold">⚡ Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var product in ViewModel.Products)
+                            {
+                            <tr id="row-@product.Id" @key="product.Id" 
+                                class="border-b-2 border-orange-200 hover:bg-gradient-to-r hover:from-orange-50 hover:to-pink-50 transition-all duration-200">
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 font-semibold text-purple-700">@product.Id</td>
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 font-bold text-orange-600 text-base lg:text-lg">@product.Name</td>
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 text-gray-700">@product.Description</td>
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 text-indigo-600 font-semibold">@product.CategoryName</td>
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 text-right">
+                                    <div class="flex justify-end gap-2">
+                                        @if (product.IsActive)
+                                        {
+                                            <button class="bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-bold py-2 px-3 lg:px-4 rounded-full shadow-md transform hover:scale-105 transition-all duration-200 text-sm lg:text-base" 
+                                                    @onclick="() => OpenEditModal(product)">
+                                                ✏️ Editar
+                                            </button>
+                                            <button class="bg-gradient-to-r from-red-400 to-red-600 hover:from-red-500 hover:to-red-700 text-white font-bold py-2 px-3 lg:px-4 rounded-full shadow-md transform hover:scale-105 transition-all duration-200 text-sm lg:text-base" 
+                                                    @onclick="() => { PendingDesactivateId = product.Id; ShowDesactivateConfirm = true;}">
+                                                🕯️ Desactivar
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <span class="bg-gray-300 text-gray-600 font-bold py-2 px-3 lg:px-4 rounded-full text-sm lg:text-base">💤 Desactivado</span>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Vista de tarjetas en móvil y tablet -->
+                <div class="lg:hidden space-y-3">
+                    @foreach (var product in ViewModel.Products)
+                    {
+                        <div @key="product.Id" class="bg-gradient-to-r from-orange-50 to-pink-50 rounded-xl border-2 border-orange-300 p-4 shadow-md">
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="text-purple-600 font-bold text-sm">💀 ID: @product.Id</span>
+                                    </div>
+                                    <h3 class="text-orange-600 font-bold text-lg mb-2">🌺 @product.Name</h3>
+                                    <p class="text-gray-700 text-sm mb-2">📿 @product.Description</p>
+                                    <p class="text-indigo-600 text-sm font-semibold">🏷️ @product.CategoryName</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-2 mt-3">
+                                @if (product.IsActive)
+                                {
+                                    <button class="flex-1 bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-bold py-2 px-3 rounded-full shadow-md transition-all duration-200 text-sm" 
+                                            @onclick="() => OpenEditModal(product)">
+                                        ✏️ Editar
+                                    </button>
+                                    <button class="flex-1 bg-gradient-to-r from-red-400 to-red-600 hover:from-red-500 hover:to-red-700 text-white font-bold py-2 px-3 rounded-full shadow-md transition-all duration-200 text-sm" 
+                                            @onclick="() => { PendingDesactivateId = product.Id; ShowDesactivateConfirm = true;}">
+                                        🕯️ Desactivar
+                                    </button>
+                                }
+                                else
+                                {
+                                    <span class="flex-1 text-center bg-gray-300 text-gray-600 font-bold py-2 px-3 rounded-full text-sm">💤 Desactivado</span>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Modal Crear Producto -->
+@if (ShowCreateModal)
+{
+    <div class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-40 p-4">
+        <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-md w-full border-2 sm:border-4 border-yellow-400 transform transition-all max-h-[90vh] overflow-y-auto">
+            <!-- Header del Modal -->
+            <div class="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 rounded-t-xl sm:rounded-t-2xl p-4 sm:p-6 border-b-2 sm:border-b-4 border-yellow-400 sticky top-0 z-10">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-white">🌼 Nuevo Producto</h2>
+                    <button @onclick="() => ShowCreateModal = false" 
+                            class="text-white hover:text-yellow-300 text-2xl sm:text-3xl font-bold transition-colors">
+                        ×
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Body del Modal -->
+            <div class="p-4 sm:p-6">
+                <EditForm Model="ActionProductViewModel.Product" OnValidSubmit="CreateAsync">
+                    <DataAnnotationsValidator />
+
+                    <div class="mb-4">
+                        <label class="block text-purple-700 font-bold mb-2 text-sm sm:text-base">🏷️ Nombre</label>
+                        <InputText @bind-Value="ActionProductViewModel.Product.Name" 
+                                   class="w-full px-3 py-2 border-2 border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-500 transition-all text-sm" />
+                        <ValidationMessage For="() => ActionProductViewModel.Product.Name" class="text-red-600 text-xs mt-1 font-semibold" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-purple-700 font-bold mb-2 text-sm sm:text-base">📝 Descripción</label>
+                        <InputText @bind-Value="ActionProductViewModel.Product.Description" 
+                                   class="w-full px-3 py-2 border-2 border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-500 transition-all text-sm" />
+                        <ValidationMessage For="() => ActionProductViewModel.Product.Description" class="text-red-600 text-xs mt-1 font-semibold" />
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-purple-700 font-bold mb-2 text-sm sm:text-base">🏷️ Categoría</label>
+                        <InputNumber @bind-Value="ActionProductViewModel.Product.CategoryId" 
+                                     class="w-full px-3 py-2 border-2 border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-500 transition-all text-sm" />
+                        <ValidationMessage For="() => ActionProductViewModel.Product.CategoryId" class="text-red-600 text-xs mt-1 font-semibold" />
+                    </div>
+
+                    <div class="flex gap-2 sm:gap-3 justify-end">
+                        <button type="button" 
+                                @onclick="() => ShowCreateModal = false" 
+                                disabled="@IsLoading"
+                                class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 sm:px-6 rounded-full shadow-lg transition-all duration-200 disabled:opacity-50 text-sm">
+                            Cancelar
+                        </button>
+                        <button type="submit" 
+                                disabled="@IsLoading"
+                                class="bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-bold py-2 px-4 sm:px-6 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 text-sm">
+                            @(IsLoading ? "💫 Guardando..." : "✨ Guardar")
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Modal Editar Producto -->
+@if (ShowEditModal)
+{
+    <div class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-40 p-4">
+        <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-md w-full border-2 sm:border-4 border-yellow-400 transform transition-all max-h-[90vh] overflow-y-auto">
+            <!-- Header del Modal -->
+            <div class="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-600 rounded-t-xl sm:rounded-t-2xl p-4 sm:p-6 border-b-2 sm:border-b-4 border-yellow-400 sticky top-0 z-10">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-white">✏️ Editar Producto</h2>
+                    <button @onclick="() => ShowEditModal = false" 
+                            class="text-white hover:text-yellow-300 text-2xl sm:text-3xl font-bold transition-colors">
+                        ×
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Body del Modal -->
+            <div class="p-4 sm:p-6">
+                <EditForm Model="ActionProductViewModel.Product" OnValidSubmit="UpdateAsync">
+                    <DataAnnotationsValidator />
+
+                    <div class="mb-4">
+                        <label class="block text-purple-700 font-bold mb-2 text-sm sm:text-base">🏷️ Nombre</label>
+                        <InputText @bind-Value="ActionProductViewModel.Product.Name" 
+                                   class="w-full px-3 py-2 border-2 border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-500 transition-all text-sm" />
+                        <ValidationMessage For="() => ActionProductViewModel.Product.Name" class="text-red-600 text-xs mt-1 font-semibold" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-purple-700 font-bold mb-2 text-sm sm:text-base">📝 Descripción</label>
+                        <InputText @bind-Value="ActionProductViewModel.Product.Description" 
+                                   class="w-full px-3 py-2 border-2 border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-500 transition-all text-sm" />
+                        <ValidationMessage For="() => ActionProductViewModel.Product.Description" class="text-red-600 text-xs mt-1 font-semibold" />
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-purple-700 font-bold mb-2 text-sm sm:text-base">🏷️ Categoría</label>
+                        <InputNumber @bind-Value="ActionProductViewModel.Product.CategoryId" 
+                                     class="w-full px-3 py-2 border-2 border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-500 transition-all text-sm" />
+                        <ValidationMessage For="() => ActionProductViewModel.Product.CategoryId" class="text-red-600 text-xs mt-1 font-semibold" />
+                    </div>
+
+                    <div class="flex gap-2 sm:gap-3 justify-end">
+                        <button type="button" 
+                                @onclick="() => ShowEditModal = false" 
+                                disabled="@IsLoading"
+                                class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 sm:px-6 rounded-full shadow-lg transition-all duration-200 disabled:opacity-50 text-sm">
+                            Cancelar
+                        </button>
+                        <button type="submit" 
+                                disabled="@IsLoading"
+                                class="bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white font-bold py-2 px-4 sm:px-6 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 text-sm">
+                            @(IsLoading ? "💫 Actualizando..." : "💾 Actualizar")
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Modal Confirmar Desactivación -->
+@if (ShowDesactivateConfirm)
+{
+    <div class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-40 p-4">
+        <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-sm w-full border-2 sm:border-4 border-yellow-400 transform transition-all">
+            <!-- Header del Modal -->
+            <div class="bg-gradient-to-r from-red-500 to-orange-600 rounded-t-xl sm:rounded-t-2xl p-4 sm:p-6 border-b-2 sm:border-b-4 border-yellow-400">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-white">⚠️ Confirmar</h2>
+                    <button @onclick="() => ShowDesactivateConfirm = false" 
+                            class="text-white hover:text-yellow-300 text-2xl sm:text-3xl font-bold transition-colors">
+                        ×
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Body del Modal -->
+            <div class="p-4 sm:p-6">
+                <div class="text-center mb-4 sm:mb-6">
+                    <div class="text-5xl sm:text-6xl mb-3 sm:mb-4">🕯️</div>
+                    <p class="text-gray-700 text-base sm:text-lg">¿Deseas desactivar este producto?</p>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-2">Esta acción puede revertirse después</p>
+                </div>
+                
+                <div class="flex gap-2 sm:gap-3 justify-center">
+                    <button type="button" 
+                            @onclick="() => ShowDesactivateConfirm = false"
+                            class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-full shadow-lg transition-all duration-200 text-sm sm:text-base">
+                        🌺 Cancelar
+                    </button>
+                    <button type="button" 
+                            @onclick="async () => await ConfirmDesactivateAsync()"
+                            class="bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 text-sm sm:text-base">
+                        🔥 Desactivar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Toast Notification -->
+@if (ShowToast)
+{
+    <div class="fixed top-4 right-4 left-4 sm:left-auto z-50 animate-slide-in">
+        @if (ToastType == "success")
+        {
+            <div class="bg-gradient-to-r from-green-400 to-green-600 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl shadow-2xl border-2 sm:border-4 border-yellow-300 flex items-center gap-2 sm:gap-3 sm:min-w-[300px]">
+                <div class="text-2xl sm:text-3xl">✅</div>
+                <div class="flex-1">
+                    <p class="font-bold text-sm sm:text-base md:text-lg">@ToastMessage</p>
+                </div>
+                <button @onclick="() => ShowToast = false" class="text-white hover:text-yellow-200 text-xl sm:text-2xl font-bold">×</button>
+            </div>
+        }
+        else if (ToastType == "error")
+        {
+            <div class="bg-gradient-to-r from-red-500 to-red-700 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl shadow-2xl border-2 sm:border-4 border-yellow-300 flex items-center gap-2 sm:gap-3 sm:min-w-[300px]">
+                <div class="text-2xl sm:text-3xl">❌</div>
+                <div class="flex-1">
+                    <p class="font-bold text-sm sm:text-base md:text-lg">@ToastMessage</p>
+                </div>
+                <button @onclick="() => ShowToast = false" class="text-white hover:text-yellow-200 text-xl sm:text-2xl font-bold">×</button>
+            </div>
+        }
+    </div>
+}

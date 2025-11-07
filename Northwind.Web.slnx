@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/Common/">
+    <Project Path="Common/Domain/Domain.csproj" />
+  </Folder>
+  <Folder Name="/Features/">
+    <Project Path="ProductManager/ProductManager.Proxy/ProductManager.Proxy.csproj" />
+    <Project Path="ProductManager/ProductManager.ViewModels/ProductManager.ViewModels.csproj" />
+    <Project Path="ProductManager/ProductManager.Views/ProductManager.Views.csproj" />
+  </Folder>
+  <Folder Name="/Features/Category/">
+    <Project Path="CategoryManager/CategoryManager.Proxy/CategoryManager.Proxy.csproj" />
+    <Project Path="CategoryManager/CategoryManager.ViewModels/CategoryManager.ViewModels.csproj" />
+    <Project Path="CategoryManager/CategoryManager.Views/CategoryManager.Views.csproj" />
+  </Folder>
+  <Project Path="Northwind.Web/Northwind.Web.csproj" />
+</Solution>

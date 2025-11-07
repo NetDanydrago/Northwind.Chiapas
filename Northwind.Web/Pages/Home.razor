@@ -1,0 +1,105 @@
+@page "/"
+
+<div class="min-h-screen bg-gradient-to-br from-orange-100 via-pink-100 to-purple-100 flex items-center justify-center p-4 sm:p-6 md:p-8 relative overflow-hidden">
+    <!-- Decoraciones de fondo -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-10 left-10 text-6xl sm:text-7xl md:text-8xl animate-bounce opacity-20">💀</div>
+        <div class="absolute top-20 right-20 text-5xl sm:text-6xl md:text-7xl animate-pulse opacity-20">🌺</div>
+        <div class="absolute bottom-20 left-20 text-5xl sm:text-6xl md:text-7xl animate-bounce opacity-20">🕯️</div>
+        <div class="absolute bottom-10 right-10 text-6xl sm:text-7xl md:text-8xl animate-pulse opacity-20">🌼</div>
+        <div class="absolute top-1/2 left-1/4 text-4xl sm:text-5xl animate-pulse opacity-20">🎭</div>
+        <div class="absolute top-1/3 right-1/3 text-4xl sm:text-5xl animate-bounce opacity-20">🦴</div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="relative z-10 max-w-5xl w-full">
+        <div class="bg-white rounded-3xl shadow-2xl border-4 sm:border-8 border-yellow-400 overflow-hidden">
+            <!-- Header con gradiente -->
+            <div class="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 p-6 sm:p-8 md:p-12 text-center border-b-4 sm:border-b-8 border-yellow-400">
+                <div class="flex justify-center items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+                    <span class="text-4xl sm:text-5xl md:text-6xl animate-bounce">💀</span>
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white">
+                        Judit Coco Fest
+                    </h1>
+                    <span class="text-4xl sm:text-5xl md:text-6xl animate-bounce">💀</span>
+                </div>
+                <p class="text-yellow-200 text-lg sm:text-xl md:text-2xl font-semibold">
+                    🌺 ¡Celebrando el Día de Muertos! 🌺
+                </p>
+            </div>
+
+            <!-- Cuerpo con logo -->
+            <div class="p-6 sm:p-8 md:p-12 lg:p-16">
+                <!-- Logo -->
+                <div class="flex justify-center mb-8 sm:mb-12">
+                    <div class="relative group">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-orange-400 via-pink-400 to-purple-500 rounded-3xl blur-2xl opacity-60 group-hover:opacity-90 transition duration-1000 animate-pulse"></div>
+                        <div class="relative bg-gradient-to-br from-purple-600 to-purple-800 rounded-3xl p-2 sm:p-3 border-4 sm:border-6 border-yellow-400 shadow-2xl">
+                            <img src="img/pocologo.png" 
+                                 alt="Coco Fest - Un Poco Loco" 
+                                 class="w-72 h-auto sm:w-96 md:w-[28rem] lg:w-[32rem] object-contain rounded-2xl transform group-hover:scale-105 transition-all duration-300" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Descripción del evento -->
+                <div class="text-center space-y-4 sm:space-y-6 mb-8 sm:mb-12">
+                    <div class="bg-gradient-to-r from-orange-100 to-pink-100 rounded-2xl p-4 sm:p-6 md:p-8 border-2 sm:border-4 border-orange-300">
+                        <p class="text-purple-700 text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4">
+                            🎉 Un evento único e inolvidable 🎉
+                        </p>
+                        <p class="text-gray-700 text-base sm:text-lg md:text-xl leading-relaxed">
+                            Celebra con nosotros la tradición más colorida de México. 
+                            Música, color, tradición y alegría se unen en una experiencia mágica.
+                        </p>
+                    </div>
+
+                    <!-- Detalles del evento -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
+                        <div class="bg-gradient-to-br from-orange-200 to-orange-300 rounded-xl p-4 sm:p-6 border-2 border-orange-400 shadow-lg transform hover:scale-105 transition-all duration-300">
+                            <div class="text-3xl sm:text-4xl mb-2">📅</div>
+                            <p class="font-bold text-purple-800 text-sm sm:text-base md:text-lg">Fecha del Evento</p>
+                            <p class="text-purple-700 text-xs sm:text-sm md:text-base">8 de Noviembre</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-pink-200 to-pink-300 rounded-xl p-4 sm:p-6 border-2 border-pink-400 shadow-lg transform hover:scale-105 transition-all duration-300">
+                            <div class="text-3xl sm:text-4xl mb-2">🎭</div>
+                            <p class="font-bold text-purple-800 text-sm sm:text-base md:text-lg">Cultura Viva</p>
+                            <p class="text-purple-700 text-xs sm:text-sm md:text-base">Tradición Mexicana</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-purple-200 to-purple-300 rounded-xl p-4 sm:p-6 border-2 border-purple-400 shadow-lg transform hover:scale-105 transition-all duration-300">
+                            <div class="text-3xl sm:text-4xl mb-2">🎊</div>
+                            <p class="font-bold text-purple-800 text-sm sm:text-base md:text-lg">¡Para Todos!</p>
+                            <p class="text-purple-700 text-xs sm:text-sm md:text-base">Entrada Libre</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to action -->
+                <div class="text-center space-y-4">
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                        <a href="/categories" 
+                           class="bg-gradient-to-r from-orange-500 to-pink-600 hover:from-orange-600 hover:to-pink-700 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 md:px-10 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 text-base sm:text-lg md:text-xl border-2 border-yellow-400">
+                            🌺 Explorar Categorías
+                        </a>
+                        <button class="bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 md:px-10 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 text-base sm:text-lg md:text-xl border-2 border-yellow-400">
+                            💀 Más Información
+                        </button>
+                    </div>
+                    
+                    <p class="text-purple-600 text-sm sm:text-base md:text-lg font-semibold italic mt-4 sm:mt-6">
+                        "Recordar es volver a vivir" 🕯️
+                    </p>
+                </div>
+            </div>
+
+            <!-- Footer con decoración -->
+            <div class="bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500 p-3 sm:p-4 md:p-6 text-center border-t-4 sm:border-t-8 border-yellow-600">
+                <p class="text-white font-bold text-base sm:text-lg md:text-xl flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+                    <span class="text-2xl sm:text-3xl">🌼</span>
+                    <span>¡Los esperamos con los brazos abiertos!</span>
+                    <span class="text-2xl sm:text-3xl">🌼</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

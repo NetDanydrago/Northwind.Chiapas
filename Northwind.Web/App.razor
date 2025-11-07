@@ -1,0 +1,18 @@
+﻿@using System.Reflection
+<Router AppAssembly="@typeof(App).Assembly" AdditionalAssemblies="AdditionalAssemblies" NotFoundPage="typeof(Pages.NotFound)">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+</Router>
+
+
+@code
+{
+    Assembly[] AdditionalAssemblies =>
+          new Assembly[]
+          {
+              typeof(CategoryManager.Views.Pages.CategoryPage).Assembly,
+              typeof(ProductManager.Views.Pages.ProductPage).Assembly
+          };
+}
